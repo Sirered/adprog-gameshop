@@ -1,15 +1,11 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      [
-        'build',
-        '-t',
-        'gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA',
-        '.',
-      ]
-      - name: 'gcr.io/cloud-builders/docker'
-    args:
-      [
-        'push',
-        'gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA',
-      ]
+    args: 
+      - 'build'
+      - '-t'
+      - 'gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - 'push'
+      - 'gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
