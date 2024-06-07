@@ -9,3 +9,11 @@ steps:
     args: 
       - 'push'
       - 'gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: 
+      - 'run'
+      - 'deploy'
+      - 'adprog-gameshop'
+      - '--platform=managed'
+      - '--image=gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
+      - '--region=asia-southeast2'
