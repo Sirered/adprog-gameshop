@@ -17,12 +17,12 @@ steps:
     args:
       - '-c'
       - |
-        DB_PASSWORD=$(gcloud secrets versions access latest --secret=db-password)
-        DB_URL=$(gcloud secrets versions access latest --secret=db-url)
-        DB_USERNAME=$(gcloud secrets versions access latest --secret=db-username)
-        echo DB_PASSWORD=${DB_PASSWORD} > db_secrets.env
-        echo DB_URL=${DB_URL} >> db_secrets.env
-        echo DB_USERNAME=${DB_USERNAME} >> db_secrets.env
+        db-password=$(gcloud secrets versions access latest --secret=db-password)
+        db-url=$(gcloud secrets versions access latest --secret=db-url)
+        db-username=$(gcloud secrets versions access latest --secret=db-username)
+        echo db-password=${db-password} > db_secrets.env
+        echo db-url=${db-url} >> db_secrets.env
+        echo db-username=${db-username} >> db_secrets.env
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: 
@@ -32,7 +32,7 @@ steps:
       - '--platform=managed'
       - '--image=gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
       - '--region=asia-southeast2'
-      - '--set-secrets=DB_PASSWORD=projects/adprog-gameshop-cd/secrets/db-password:latest,DB_URL=projects/adprog-gameshop-cd/secrets/db-url:latest,DB_USERNAME=projects/adprog-gameshop-cd/secrets/db-username:latest'
+      - '--set-secrets=db-password=projects/adprog-gameshop-cd/secrets/db-password:latest,db-url=projects/adprog-gameshop-cd/secrets/db-url:latest,db-username=projects/adprog-gameshop-cd/secrets/db-username:latest'
 
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'sh'
