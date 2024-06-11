@@ -32,7 +32,7 @@ steps:
       - '--platform=managed'
       - '--image=gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
       - '--region=asia-southeast2'
-      - '--set-env-vars=DB_PASSWORD=$(cat db_secrets.env | grep DB_PASSWORD | cut -d '=' -f 2),DB_URL=$(cat db_secrets.env | grep DB_URL | cut -d '=' -f 2),DB_USERNAME=$(cat db_secrets.env | grep DB_USERNAME | cut -d '=' -f 2)'
+      - '--set-secrets=DB_PASSWORD=projects/adprog-gameshop-cd/secrets/db-password:latest,DB_URL=projects/adprog-gameshop-cd/secrets/db-url:latest,DB_USERNAME=projects/adprog-gameshop-cd/secrets/db-username:latest'
 
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'sh'
