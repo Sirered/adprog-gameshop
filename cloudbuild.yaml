@@ -34,9 +34,9 @@ steps:
       - '--region=asia-southeast2'
       - '--set-env-vars=DB_PASSWORD=$(cat db_secrets.env | grep DB_PASSWORD | cut -d '=' -f 2),DB_URL=$(cat db_secrets.env | grep DB_URL | cut -d '=' -f 2),DB_USERNAME=$(cat db_secrets.env | grep DB_USERNAME | cut -d '=' -f 2)'
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      rm db_secrets.env
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        rm db_secrets.env
