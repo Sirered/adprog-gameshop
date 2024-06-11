@@ -20,9 +20,9 @@ steps:
         DB_PASSWORD=$(gcloud secrets versions access latest --secret=db-password)
         DB_URL=$(gcloud secrets versions access latest --secret=db-url)
         DB_USERNAME=$(gcloud secrets versions access latest --secret=db-username)
-        echo "DB_PASSWORD=${DB_PASSWORD}" > db_secrets.env
-        echo "DB_URL=${DB_URL}" >> db_secrets.env
-        echo "DB_USERNAME=${DB_USERNAME}" >> db_secrets.env
+        echo DB_PASSWORD=${DB_PASSWORD} > db_secrets.env
+        echo DB_URL=${DB_URL} >> db_secrets.env
+        echo DB_USERNAME=${DB_USERNAME} >> db_secrets.env
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: 
