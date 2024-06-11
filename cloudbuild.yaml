@@ -34,9 +34,9 @@ steps:
       - '--region=asia-southeast2'
       - '--set-secrets=DB_PASSWORD=projects/adprog-gameshop-cd/secrets/db-password:latest,DB_URL=projects/adprog-gameshop-cd/secrets/db-url:latest,DB_USERNAME=projects/adprog-gameshop-cd/secrets/db-username:latest'
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      rm db_secrets.env
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        rm db_secrets.env
