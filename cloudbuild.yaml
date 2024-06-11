@@ -20,9 +20,9 @@ steps:
         DB_PASSWORD=$(gcloud secrets versions access latest --secret=db-password)
         DB_URL=$(gcloud secrets versions access latest --secret=db-url)
         DB_USERNAME=$(gcloud secrets versions access latest --secret=db-username)
-        echo DB_PASSWORD=${DB_PASSWORD} > db_secrets.env
-        echo DB_URL=${DB_URL} >> db_secrets.env
-        echo DB_USERNAME=${DB_USERNAME} >> db_secrets.env
+        echo "DB_PASSWORD=${DB_PASSWORD}" > db_secrets.env
+        echo "DB_URL=${DB_URL}" >> db_secrets.env
+        echo "DB_USERNAME=${DB_USERNAME}" >> db_secrets.env
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: 
@@ -32,11 +32,11 @@ steps:
       - '--platform=managed'
       - '--image=gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
       - '--region=asia-southeast2'
-      - '--set-secrets=DB_PASSWORD=projects/adprog-gameshop-cd/secrets/db-password:latest,DB_URL=projects/adprog-gameshop-cd/secrets/db-url:latest,DB_USERNAME=projects/adprog-gameshop-cd/secrets/db-username:latest'
+      - '--set-env-vars=DB_PASSWORD=$(cat db_secrets.env | grep DB_PASSWORD | cut -d '=' -f 2),DB_URL=$(cat db_secrets.env | grep DB_URL | cut -d '=' -f 2),DB_USERNAME=$(cat db_secrets.env | grep DB_USERNAME | cut -d '=' -f 2)'
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        rm db_secrets.env
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      rm db_secrets.env
