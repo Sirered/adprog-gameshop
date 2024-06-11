@@ -5,25 +5,10 @@ steps:
       - '-t'
       - 'gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
       - '.'
-
   - name: 'gcr.io/cloud-builders/docker'
     args: 
       - 'push'
       - 'gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
-
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: 'fetch-db-password'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        db-password=$(gcloud secrets versions access latest --secret=db-password)
-        db-url=$(gcloud secrets versions access latest --secret=db-url)
-        db-username=$(gcloud secrets versions access latest --secret=db-username)
-        echo db-password=${db-password} > db_secrets.env
-        echo db-url=${db-url} >> db_secrets.env
-        echo db-username=${db-username} >> db_secrets.env
-
   - name: 'gcr.io/cloud-builders/gcloud'
     args: 
       - 'run'
@@ -32,11 +17,3 @@ steps:
       - '--platform=managed'
       - '--image=gcr.io/adprog-gameshop-cd/github.com/sirered/adprog-gameshop:$SHORT_SHA'
       - '--region=asia-southeast2'
-      - '--set-secrets=db-password=projects/adprog-gameshop-cd/secrets/db-password:latest,db-url=projects/adprog-gameshop-cd/secrets/db-url:latest,db-username=projects/adprog-gameshop-cd/secrets/db-username:latest'
-
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        rm db_secrets.env
